@@ -33,8 +33,8 @@ CLASS lcl_popup DEFINITION.
 
     METHODS popup_perf_test_parameters
       EXPORTING
-        !et_object_type_filter   TYPE zif_abapgit_definitions=>ty_object_type_range
-        !et_object_name_filter   TYPE zif_abapgit_definitions=>ty_object_name_range
+        !et_object_type_filter   TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range
+        !et_object_name_filter   TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range
       CHANGING
         !cv_package              TYPE devclass
         !cv_include_sub_packages TYPE abap_bool
@@ -149,10 +149,10 @@ CLASS zcl_abapgit_performance_test DEFINITION
       constructor IMPORTING iv_package              TYPE devclass
                             iv_include_sub_packages TYPE abap_bool DEFAULT abap_true
                             iv_main_language_only   TYPE abap_bool DEFAULT abap_true,
-      set_object_type_filter IMPORTING it_object_type_range TYPE zif_abapgit_definitions=>ty_object_type_range,
-      set_object_name_filter IMPORTING it_object_name_range TYPE zif_abapgit_definitions=>ty_object_name_range,
-      get_object_type_filter RETURNING VALUE(rt_object_type_range) TYPE zif_abapgit_definitions=>ty_object_type_range,
-      get_object_name_filter RETURNING VALUE(rt_object_name_range) TYPE zif_abapgit_definitions=>ty_object_name_range,
+      set_object_type_filter IMPORTING it_object_type_range TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
+      set_object_name_filter IMPORTING it_object_name_range TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
+      get_object_type_filter RETURNING VALUE(rt_object_type_range) TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
+      get_object_name_filter RETURNING VALUE(rt_object_name_range) TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
       run_measurement RAISING zcx_abapgit_exception,
       get_result RETURNING VALUE(rt_result) TYPE ty_results.
   PROTECTED SECTION.
@@ -167,8 +167,8 @@ CLASS zcl_abapgit_performance_test DEFINITION
       mv_include_sub_packages TYPE abap_bool,
       mv_main_language_only   TYPE abap_bool,
       BEGIN OF ms_filter_parameters,
-        object_type_range TYPE zif_abapgit_definitions=>ty_object_type_range,
-        object_name_range TYPE zif_abapgit_definitions=>ty_object_name_range,
+        object_type_range TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
+        object_name_range TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
       END OF ms_filter_parameters,
       mt_result TYPE ty_results.
 ENDCLASS.
@@ -247,9 +247,7 @@ CLASS zcl_abapgit_performance_test IMPLEMENTATION.
     TRY.
         lt_tadir = select_tadir_entries( ).
 
-        CREATE OBJECT lo_serializer
-          EXPORTING
-            iv_serialize_master_lang_only = mv_main_language_only.
+        CREATE OBJECT lo_serializer.
 
         LOOP AT lt_tadir ASSIGNING <ls_tadir>.
           INSERT <ls_tadir> INTO TABLE lt_tadir_single.
@@ -321,8 +319,8 @@ FORM run RAISING zcx_abapgit_exception.
         lv_package              TYPE devclass,
         lv_include_sub_packages TYPE abap_bool VALUE abap_true,
         lv_main_language_only   TYPE abap_bool VALUE abap_true,
-        lt_object_type_filter   TYPE zif_abapgit_definitions=>ty_object_type_range,
-        lt_object_name_filter   TYPE zif_abapgit_definitions=>ty_object_name_range,
+        lt_object_type_filter   TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
+        lt_object_name_filter   TYPE zcl_abapgit_free_sel_dialog=>ty_free_sel_field-value_range,
         lt_result               TYPE zcl_abapgit_performance_test=>ty_results,
         lo_alv                  TYPE REF TO cl_salv_table,
         lx_salv_error           TYPE REF TO cx_salv_error,
