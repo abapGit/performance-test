@@ -40,7 +40,7 @@ CLASS lcl_popup DEFINITION.
         !cv_include_sub_packages TYPE abap_bool
         !cv_main_language_only   TYPE abap_bool
       RAISING
-        zcx_abapgit_exception .
+        zcx_abapgit_exception.
 ENDCLASS.
 
 CLASS lcl_popup IMPLEMENTATION.
@@ -92,10 +92,10 @@ CLASS lcl_popup IMPLEMENTATION.
 
     popup_get_from_free_selections(
       EXPORTING
-        iv_title       = 'Serialization Performance Test Parameters'
-        iv_frame_text  = 'Parameters'
+        iv_title      = 'Serialization Performance Test Parameters'
+        iv_frame_text = 'Parameters'
       CHANGING
-        ct_fields      = lt_fields ).
+        ct_fields     = lt_fields ).
 
     LOOP AT lt_fields ASSIGNING <ls_field>.
       CASE <ls_field>-name.
@@ -325,9 +325,7 @@ FORM run RAISING zcx_abapgit_exception.
         lo_alv                  TYPE REF TO cl_salv_table,
         lx_salv_error           TYPE REF TO cx_salv_error,
         lo_runtime_column       TYPE REF TO cl_salv_column,
-        lo_seconds_column       TYPE REF TO cl_salv_column,
-        li_popups               TYPE REF TO zif_abapgit_popups.
-
+        lo_seconds_column       TYPE REF TO cl_salv_column.
 
   NEW lcl_popup( )->popup_perf_test_parameters(
     IMPORTING
